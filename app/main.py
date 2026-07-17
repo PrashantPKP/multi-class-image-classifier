@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
 
-from predict import predict_image
+from app.predict import predict_image
 
 import shutil
 
