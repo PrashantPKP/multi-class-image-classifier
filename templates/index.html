@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Intel Image Classifier</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Intel Image Classification</h1>
+
+<form
+    id="uploadForm"
+    action="/upload"
+    method="post"
+    enctype="multipart/form-data"
+>
+
+
+    <input
+        type="file"
+        name="file"
+        id="imageInput"
+        accept="image/*"
+        required
+    >
+
+    <br><br>
+
+    <img
+        id="preview"
+        src=""
+        alt="Image Preview"
+        width="300"
+        style="display:none;"
+    >
+
+    <br><br>
+
+    <button type="submit">
+        Predict Image
+    </button>
+
+</form>
+<div id="result"></div>
+
+<div id="loading" style="display:none;">
+    <h3>Predicting...</h3>
+</div>
+
+    {% if prediction %}
+
+    <img
+    src="{{ image_path }}"
+    width="300"
+    alt="Uploaded Image"
+>
+
+    <br><br>
+
+        <h2>
+            Prediction: {{ prediction }}
+        </h2>
+
+        <h3>
+            Confidence: {{ confidence }}
+        </h3>
+
+    {% endif %}
+
+</div>
+
+
+
+
+
+<script>
+try {
+    // fetch code
+
+console.log("JavaScript Loaded");
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const preview =
+    document.getElementById("preview");
+
+imageInput.addEventListener(
+    "change",
+    function(event) {
+
+        const file =
+            event.target.files[0];
+
+        if (file) {
+
+            preview.src =
+                URL.createObjectURL(file);
+
+            preview.style.display =
+                "block";
+        }
+    }
+);
+
+const form = document.getElementById("uploadForm");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    // Clear previous prediction
+    document.getElementById("result").innerHTML = "";
+
+    const formData = new FormData(form);
+
+    document.getElementById("loading").style.display = "block";
+
+    const response = await fetch(
+        "/api/predict",
+        {
+            method: "POST",
+            body: formData
+        }
+    );
+
+    const data = await response.json();
+
+    document.getElementById("loading").style.display = "none";
+    
+    const resultDiv =
+    document.getElementById("result");
+    const confidence = (data.confidence * 100).toFixed(2);
+
+    resultDiv.innerHTML = `
+    <h2>Prediction: ${data.prediction}</h2>
+    <h3>Confidence: ${confidence}%</h3>
+`;
+
+    console.log(data);
+
+});
+
+}
+catch(error) {
+    console.error(error);
+
+    document.getElementById("result").innerHTML =
+        "<h3>Error occurred while predicting.</h3>";
+}
+finally {
+    document.getElementById("loading").style.display = "none";
+}
+
+</script>
+
+
+
+</body>
+</html>
