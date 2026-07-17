@@ -7,6 +7,10 @@ import shutil
 
 from fastapi.staticfiles import StaticFiles
 
+import os
+
+os.makedirs("uploads", exist_ok=True)
+
 app = FastAPI()
 
 app.mount(
