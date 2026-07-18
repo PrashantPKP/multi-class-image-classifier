@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
-from app.predict import predict_image
 from fastapi.staticfiles import StaticFiles
+from app.predict import predict_image
 import shutil
 import requests
 import uuid
@@ -75,38 +75,108 @@ async def api_predict(file: UploadFile = File(...)):
         "image_path": f"/uploads/{file.filename}"
     }
 
+
 @app.post("/api/predict-url")
 async def predict_url(image_url: str):
 
     try:
 
-        filename = f"uploads/{uuid.uuid4()}.jpg"
+        # Create unique filename
+
+        filename = (
+            f"uploads/{uuid.uuid4()}.jpg"
+        )
+
+        # Download image
 
         response = requests.get(
             image_url,
-            timeout=10
+            timeout=10,
+            headers={
+                "User-Agent":
+                "Mozilla/5.0"
+            }
         )
 
         response.raise_for_status()
 
-        print("Status:", response.status_code)
-        print("Content-Type:", response.headers.get("content-type"))
+        # Verify content is image
 
-        with open(filename, "wb") as f:
-            f.write(response.content)
+        content_type = (
+            response.headers.get(
+                "Content-Type",
+                ""
+            )
+        )
 
-        prediction, confidence = predict_image(filename)
+        if not content_type.startswith(
+            "image/"
+        ):
+
+            return {
+                "error":
+                "Invalid URL. Please provide a direct image URL (.jpg, .jpeg, .png, .webp)"
+            }
+
+        # Save image
+
+        with open(
+            filename,
+            "wb"
+        ) as f:
+
+            f.write(
+                response.content
+            )
+
+        # Predict
+
+        prediction, confidence = (
+            predict_image(filename)
+        )
 
         return {
-            "prediction": prediction,
-            "confidence": float(confidence),
-            "image_path": "/" + filename
+
+            "prediction":
+            prediction,
+
+            "confidence":
+            float(confidence),
+
+            "image_path":
+            "/" + filename
+
+        }
+
+    except requests.exceptions.Timeout:
+
+        return {
+            "error":
+            "Request timed out while downloading image."
+        }
+
+    except requests.exceptions.ConnectionError:
+
+        return {
+            "error":
+            "Unable to connect to image URL."
+        }
+
+    except requests.exceptions.HTTPError:
+
+        return {
+            "error":
+            "Image URL returned an invalid response."
         }
 
     except Exception as e:
 
-        print("ERROR:", e)
+        print(
+            "Prediction Error:",
+            str(e)
+        )
 
         return {
-            "error": str(e)
+            "error":
+            str(e)
         }

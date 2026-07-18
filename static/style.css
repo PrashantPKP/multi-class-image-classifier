@@ -384,3 +384,11 @@ footer{
 
     margin-top:15px;
 }
+
+.error-box{
+    background:#ef4444;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+}
