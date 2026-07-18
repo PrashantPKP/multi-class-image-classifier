@@ -1,12 +1,10 @@
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
-
 from app.predict import predict_image
-
-import shutil
-
 from fastapi.staticfiles import StaticFiles
-
+import shutil
+import requests
+import uuid
 import os
 
 os.makedirs("uploads", exist_ok=True)
@@ -76,3 +74,39 @@ async def api_predict(file: UploadFile = File(...)):
         "confidence": float(confidence),
         "image_path": f"/uploads/{file.filename}"
     }
+
+@app.post("/api/predict-url")
+async def predict_url(image_url: str):
+
+    try:
+
+        filename = f"uploads/{uuid.uuid4()}.jpg"
+
+        response = requests.get(
+            image_url,
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+        print("Status:", response.status_code)
+        print("Content-Type:", response.headers.get("content-type"))
+
+        with open(filename, "wb") as f:
+            f.write(response.content)
+
+        prediction, confidence = predict_image(filename)
+
+        return {
+            "prediction": prediction,
+            "confidence": float(confidence),
+            "image_path": "/" + filename
+        }
+
+    except Exception as e:
+
+        print("ERROR:", e)
+
+        return {
+            "error": str(e)
+        }

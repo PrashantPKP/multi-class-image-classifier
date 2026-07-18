@@ -1,92 +1,281 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel Vision AI</title>
 
-    <title>Intel Image Classifier</title>
+    <link rel="stylesheet" href="/static/style.css">
 
     <link
         rel="stylesheet"
-        href="/static/style.css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     >
-
 </head>
-
 <body>
 
-<div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
 
-    <h1>Intel Image Classification</h1>
+        <div class="hero-content">
 
-<form
-    id="uploadForm"
-    action="/upload"
-    method="post"
-    enctype="multipart/form-data"
->
+            <h1>
+                🧠 Intel Vision AI
+            </h1>
 
+            <p>
+                Deep Learning Powered Scene Classification System
+                built with TensorFlow, FastAPI, Docker and Modern Web Technologies.
+            </p>
 
-    <input
-        type="file"
-        name="file"
-        id="imageInput"
-        accept="image/*"
-        required
-    >
+            <div class="hero-buttons">
 
-    <br><br>
+                <a
+                    href="https://github.com/Sido-dev/intel-image-classification-fastapi"
+                    target="_blank"
+                    class="btn-primary"
+                >
+                    <i class="fab fa-github"></i>
+                    Deployment Repo
+                </a>
 
-    <img
-        id="preview"
-        src=""
-        alt="Image Preview"
-        width="300"
-        style="display:none;"
-    >
+                <a
+                    href="https://github.com/Sido-dev/Deep-Learning-Projects/tree/main/CNN/intel-image-classification"
+                    target="_blank"
+                    class="btn-secondary"
+                >
+                    <i class="fas fa-brain"></i>
+                    Training Repo
+                </a>
 
-    <br><br>
+            </div>
 
-    <button type="submit">
-        Predict Image
-    </button>
+        </div>
 
-</form>
-<div id="result"></div>
+    </section>
 
-<div id="loading" style="display:none;">
-    <h3>Predicting...</h3>
-</div>
+    <!-- Stats -->
 
-    {% if prediction %}
+    <section class="stats">
 
-    <img
-    src="{{ image_path }}"
-    width="300"
-    alt="Uploaded Image"
->
+        <div class="stat-card">
+            <h2>6</h2>
+            <p>Classes</p>
+        </div>
 
-    <br><br>
+        <div class="stat-card">
+            <h2>CNN</h2>
+            <p>Model Type</p>
+        </div>
 
-        <h2>
-            Prediction: {{ prediction }}
-        </h2>
+        <div class="stat-card">
+            <h2>TensorFlow</h2>
+            <p>Framework</p>
+        </div>
 
-        <h3>
-            Confidence: {{ confidence }}
-        </h3>
+        <div class="stat-card">
+            <h2>Docker</h2>
+            <p>Deployment</p>
+        </div>
 
-    {% endif %}
+    </section>
 
-</div>
+    <!-- Main Content -->
 
+    <div class="main-container">
 
+        <!-- Upload Card -->
 
+        <div class="upload-card">
 
+            <h2>Upload Image</h2>
+
+            <p>
+                Upload a scene image and let the AI model classify it.
+            </p>
+
+            <form
+                id="uploadForm"
+                enctype="multipart/form-data"
+            >
+
+                <label class="drop-zone">
+
+                    <input
+                        type="file"
+                        name="file"
+                        id="imageInput"
+                        accept="image/*"
+                        required
+                    >
+
+                    <div class="drop-content">
+
+                        <i class="fas fa-cloud-upload-alt"></i>
+
+                        <h3>Drag & Drop Image</h3>
+
+                        <p>or click to browse</p>
+
+                    </div>
+
+                </label>
+
+                <img
+                    id="preview"
+                    src=""
+                    alt="Preview"
+                >
+
+                <button type="submit">
+                    Predict Image
+                </button>
+
+            </form>
+
+            <div class="url-section">
+
+            <h3>
+                🌐 Predict Using Image URL
+            </h3>
+
+            <p>
+                Paste a direct image URL and let the AI classify it.
+            </p>
+
+            <input
+                type="text"
+                id="imageUrl"
+                placeholder="https://example.com/image.jpg"
+            >
+
+            <button
+                type="button"
+                id="urlPredictBtn"
+            >
+                Predict From URL
+            </button>
+
+        </div>
+
+            <div id="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                Predicting...
+            </div>
+
+        </div>
+
+        <!-- Prediction Card -->
+
+        <div class="prediction-card">
+
+            <h2>Prediction Result</h2>
+
+            <div id="result">
+
+                <div class="placeholder">
+
+                    <i class="fas fa-image"></i>
+
+                    <p>
+                        Upload an image to see predictions
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Project Section -->
+
+    <section class="project-section">
+
+        <div class="info-box">
+
+            <h2>Project Overview</h2>
+
+            <p>
+                Intel Vision AI is a Deep Learning based image classification
+                system trained on the Intel Image Classification Dataset.
+
+                The model uses Convolutional Neural Networks (CNNs) and
+                Transfer Learning to classify scene images into six categories.
+            </p>
+
+        </div>
+
+        <div class="info-box">
+
+            <h2>Supported Classes</h2>
+
+            <div class="class-grid">
+
+                <div class="class-card">🏢 Buildings</div>
+                <div class="class-card">🌲 Forest</div>
+                <div class="class-card">❄️ Glacier</div>
+                <div class="class-card">⛰️ Mountain</div>
+                <div class="class-card">🌊 Sea</div>
+                <div class="class-card">🛣️ Street</div>
+
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <h2>Technology Stack</h2>
+
+            <div class="tech-grid">
+
+                <span>TensorFlow</span>
+                <span>FastAPI</span>
+                <span>Python</span>
+                <span>Docker</span>
+                <span>HTML5</span>
+                <span>CSS3</span>
+                <span>JavaScript</span>
+
+            </div>
+
+        </div>
+
+        <div class="info-box">
+
+            <h2>Model Workflow</h2>
+
+            <div class="workflow">
+
+                <div>Image Upload</div>
+                <span>→</span>
+
+                <div>Preprocessing</div>
+                <span>→</span>
+
+                <div>CNN Model</div>
+                <span>→</span>
+
+                <div>Prediction</div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        Built by Sudhanshu Narayane
+
+        <br>
+
+        TensorFlow • FastAPI • Docker • Render
+
+    </footer>
 
 <script>
-try {
-    // fetch code
-
-console.log("JavaScript Loaded");
 
 const imageInput =
     document.getElementById("imageInput");
@@ -94,76 +283,119 @@ const imageInput =
 const preview =
     document.getElementById("preview");
 
-imageInput.addEventListener(
-    "change",
-    function(event) {
+imageInput.addEventListener("change", function(event){
 
-        const file =
-            event.target.files[0];
+    const file =
+        event.target.files[0];
 
-        if (file) {
+    if(file){
 
-            preview.src =
-                URL.createObjectURL(file);
+        preview.src =
+            URL.createObjectURL(file);
 
-            preview.style.display =
-                "block";
-        }
+        preview.style.display =
+            "block";
     }
-);
-
-const form = document.getElementById("uploadForm");
-
-form.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    // Clear previous prediction
-    document.getElementById("result").innerHTML = "";
-
-    const formData = new FormData(form);
-
-    document.getElementById("loading").style.display = "block";
-
-    const response = await fetch(
-        "/api/predict",
-        {
-            method: "POST",
-            body: formData
-        }
-    );
-
-    const data = await response.json();
-
-    document.getElementById("loading").style.display = "none";
-    
-    const resultDiv =
-    document.getElementById("result");
-    const confidence = (data.confidence * 100).toFixed(2);
-
-    resultDiv.innerHTML = `
-    <h2>Prediction: ${data.prediction}</h2>
-    <h3>Confidence: ${confidence}%</h3>
-`;
-
-    console.log(data);
 
 });
 
-}
-catch(error) {
-    console.error(error);
+const form =
+    document.getElementById("uploadForm");
 
-    document.getElementById("result").innerHTML =
-        "<h3>Error occurred while predicting.</h3>";
-}
-finally {
-    document.getElementById("loading").style.display = "none";
-}
+form.addEventListener("submit", async function(event){
 
+    event.preventDefault();
+
+    document.getElementById("loading").style.display =
+        "block";
+
+    const formData =
+        new FormData(form);
+
+    const response =
+        await fetch("/api/predict",{
+            method:"POST",
+            body:formData
+        });
+
+    const data =
+        await response.json();
+
+    document.getElementById("loading").style.display =
+        "none";
+
+    const confidence =
+        (data.confidence * 100).toFixed(2);
+
+    document.getElementById("result").innerHTML = `
+        <h3>${data.prediction}</h3>
+
+        <p>Confidence: ${confidence}%</p>
+
+        <div class="progress">
+            <div
+                class="progress-fill"
+                style="width:${confidence}%">
+            </div>
+        </div>
+
+        <img
+            src="${data.image_path}"
+            class="result-image"
+        >
+    `;
+
+});
+
+const urlBtn =
+document.getElementById("urlPredictBtn");
+
+urlBtn.addEventListener(
+    "click",
+    async function(){
+
+        const imageUrl =
+        document.getElementById("imageUrl").value;
+
+        if(!imageUrl){
+
+            alert("Enter image URL");
+
+            return;
+        }
+
+        document.getElementById("loading").style.display =
+            "block";
+
+        const response =
+        await fetch(
+            "/api/predict-url?image_url=" +
+            encodeURIComponent(imageUrl),
+            {
+                method:"POST"
+            }
+        );
+
+        const data =
+        await response.json();
+
+        document.getElementById("loading").style.display =
+            "none";
+
+        const confidence =
+        (data.confidence * 100).toFixed(2);
+
+        document.getElementById("result").innerHTML = `
+            <h3>${data.prediction}</h3>
+            <p>Confidence: ${confidence}%</p>
+            <img
+                src="${data.image_path}"
+                class="result-image"
+            >
+        `;
+    }
+);
 </script>
-
-
 
 </body>
 </html>
