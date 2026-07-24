@@ -11,21 +11,39 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <div class="status-bar">
+        <span>INTEL VISION AI</span>
+        <span class="status-bar-mid">MODEL: CNN &middot; TRANSFER LEARNING &middot; TENSORFLOW</span>
+        <span class="status-bar-live"><i class="dot"></i>SYSTEM ONLINE</span>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
 
+        <svg class="hero-contours" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path d="M -50,420 C 120,380 180,460 320,410 C 460,360 520,440 650,400 C 800,355 850,410 1050,380" />
+            <path d="M -50,360 C 130,320 190,400 330,350 C 470,300 530,380 660,340 C 810,295 860,350 1050,320" />
+            <path d="M -50,300 C 140,260 200,340 340,290 C 480,240 540,320 670,280 C 820,235 870,290 1050,260" />
+            <path d="M -50,240 C 150,205 210,270 350,230 C 490,190 550,255 680,225 C 830,185 880,230 1050,205" />
+            <path d="M -50,485 C 110,450 170,520 310,475 C 450,430 510,505 640,465 C 790,420 840,470 1050,445" />
+        </svg>
+
         <div class="hero-content">
 
+            <p class="hero-eyebrow">Scene Classification System &mdash; Rev. 01</p>
+
             <h1>
-                🧠 Intel Vision AI
+                Intel Vision AI
             </h1>
 
             <p>
-                Deep Learning Powered Scene Classification System
-                built with TensorFlow, FastAPI, Docker and Modern Web Technologies.
+                Deep learning powered scene classification, built with
+                TensorFlow, FastAPI, Docker and modern web technologies.
             </p>
 
             <div class="hero-buttons">
@@ -113,7 +131,7 @@
 
                         <i class="fas fa-cloud-upload-alt"></i>
 
-                        <h3>Drag & Drop Image</h3>
+                        <h3>Drag &amp; Drop Image</h3>
 
                         <p>or click to browse</p>
 
@@ -136,7 +154,7 @@
             <div class="url-section">
 
             <h3>
-                🌐 Predict Using Image URL
+                Predict Using Image URL
             </h3>
 
             <p>
@@ -175,11 +193,13 @@
 
                 <div class="placeholder">
 
-                    <i class="fas fa-image"></i>
+                    <i class="fas fa-crosshairs"></i>
 
                     <p>
                         Upload an image to see predictions
                     </p>
+
+                    <span class="placeholder-status">Status: Standby</span>
 
                 </div>
 
@@ -198,11 +218,11 @@
             <h2>Project Overview</h2>
 
             <p>
-                Intel Vision AI is a Deep Learning based image classification
+                Intel Vision AI is a deep learning based image classification
                 system trained on the Intel Image Classification Dataset.
 
                 The model uses Convolutional Neural Networks (CNNs) and
-                Transfer Learning to classify scene images into six categories.
+                transfer learning to classify scene images into six categories.
             </p>
 
         </div>
@@ -249,13 +269,13 @@
             <div class="workflow">
 
                 <div>Image Upload</div>
-                <span>→</span>
+                <span>&rarr;</span>
 
                 <div>Preprocessing</div>
-                <span>→</span>
+                <span>&rarr;</span>
 
                 <div>CNN Model</div>
-                <span>→</span>
+                <span>&rarr;</span>
 
                 <div>Prediction</div>
 
@@ -267,11 +287,15 @@
 
     <footer>
 
-        Built by Sudhanshu Narayane
+        <div class="footer-inner">
 
-        <br>
+            <span>Built by Sudhanshu Narayane</span>
 
-        TensorFlow • FastAPI • Docker • Render
+            <span class="footer-status"><i class="dot"></i>Deployed &amp; running</span>
+
+            <span>TensorFlow &bull; FastAPI &bull; Docker &bull; Render</span>
+
+        </div>
 
     </footer>
 
@@ -298,6 +322,15 @@ imageInput.addEventListener("change", function(event){
     }
 
 });
+
+// Maps a predicted label to a data-class token used purely for
+// styling (colors the specimen card's accent tab). Falls back
+// gracefully if a label isn't in the map -- no effect on logic.
+function classToken(label){
+    return String(label || "")
+        .toLowerCase()
+        .replace(/[^a-z]/g, "");
+}
 
 const form =
     document.getElementById("uploadForm");
@@ -328,21 +361,30 @@ form.addEventListener("submit", async function(event){
         (data.confidence * 100).toFixed(2);
 
     document.getElementById("result").innerHTML = `
-        <h3>${data.prediction}</h3>
+        <div class="specimen-card" data-class="${classToken(data.prediction)}">
+            <div class="specimen-tab"></div>
+            <div class="specimen-body">
+                <span class="specimen-label">Classification</span>
+                <h3>${data.prediction}</h3>
 
-        <p>Confidence: ${confidence}%</p>
+                <div class="confidence-row">
+                    <span class="specimen-label">Confidence</span>
+                    <span class="confidence-value">${confidence}%</span>
+                </div>
 
-        <div class="progress">
-            <div
-                class="progress-fill"
-                style="width:${confidence}%">
+                <div class="progress">
+                    <div
+                        class="progress-fill"
+                        style="width:${confidence}%">
+                    </div>
+                </div>
+
+                <img
+                    src="${data.image_path}"
+                    class="result-image"
+                >
             </div>
         </div>
-
-        <img
-            src="${data.image_path}"
-            class="result-image"
-        >
     `;
 
 });
@@ -398,12 +440,23 @@ urlBtn.addEventListener(
         (data.confidence * 100).toFixed(2);
 
         document.getElementById("result").innerHTML = `
-            <h3>${data.prediction}</h3>
-            <p>Confidence: ${confidence}%</p>
-            <img
-                src="${data.image_path}"
-                class="result-image"
-            >
+            <div class="specimen-card" data-class="${classToken(data.prediction)}">
+                <div class="specimen-tab"></div>
+                <div class="specimen-body">
+                    <span class="specimen-label">Classification</span>
+                    <h3>${data.prediction}</h3>
+
+                    <div class="confidence-row">
+                        <span class="specimen-label">Confidence</span>
+                        <span class="confidence-value">${confidence}%</span>
+                    </div>
+
+                    <img
+                        src="${data.image_path}"
+                        class="result-image"
+                    >
+                </div>
+            </div>
         `;
     }
 );
