@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.predict import predict_image
+from datetime import datetime
 import shutil
 import requests
 import uuid
@@ -180,3 +181,12 @@ async def predict_url(image_url: str):
             "error":
             str(e)
         }
+
+@app.get("/health")
+async def health():
+
+    return {
+        "status": "ok",
+        "service": "Intel Image Classification API",
+        "timestamp": datetime.utcnow().isoformat()
+    }
