@@ -16,8 +16,6 @@ uploads/*
 # Trained model files (large binary — store separately or use Git LFS)
 models/*.keras
 
-# Training dataset (too large for git)
-traning_data/train/
 
 # Jupyter notebooks checkpoints
 .ipynb_checkpoints/
