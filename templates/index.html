@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intel Vision AI</title>
+    <title>Multi-Class Image Classifier</title>
 
     <link rel="stylesheet" href="/static/style.css">
 
@@ -17,7 +17,7 @@
 <body>
 
     <div class="status-bar">
-        <span>INTEL VISION AI</span>
+        <span>MULTI-CLASS IMAGE CLASSIFIER</span>
         <span class="status-bar-mid">MODEL: CNN &middot; TRANSFER LEARNING &middot; TENSORFLOW</span>
         <span class="status-bar-live"><i class="dot"></i>SYSTEM ONLINE</span>
     </div>
@@ -35,14 +35,14 @@
 
         <div class="hero-content">
 
-            <p class="hero-eyebrow">Scene Classification System &mdash; Rev. 01</p>
+            <p class="hero-eyebrow">Multi-Class Image Classification System &mdash; Rev. 01</p>
 
             <h1>
-                Intel Vision AI
+                Multi-Class Image Classifier
             </h1>
 
             <p>
-                Deep learning powered scene classification, built with
+                Deep learning powered image classification, built with
                 TensorFlow, FastAPI, Docker and modern web technologies.
             </p>
 
@@ -77,7 +77,7 @@
     <section class="stats">
 
         <div class="stat-card">
-            <h2>6</h2>
+            <h2>13</h2>
             <p>Classes</p>
         </div>
 
@@ -109,7 +109,7 @@
             <h2>Upload Image</h2>
 
             <p>
-                Upload a scene image and let the AI model classify it.
+                Upload an image and let the AI model classify it.
             </p>
 
             <form
@@ -218,11 +218,11 @@
             <h2>Project Overview</h2>
 
             <p>
-                Intel Vision AI is a deep learning based image classification
-                system trained on the Intel Image Classification Dataset.
+                Multi-Class Image Classifier is a deep learning based image classification
+                system trained on the original Intel scene dataset and expanded with additional classes.
 
                 The model uses Convolutional Neural Networks (CNNs) and
-                transfer learning to classify scene images into six categories.
+                transfer learning to classify scene images into 13 categories.
             </p>
 
         </div>
@@ -239,6 +239,13 @@
                 <div class="class-card">⛰️ Mountain</div>
                 <div class="class-card">🌊 Sea</div>
                 <div class="class-card">🛣️ Street</div>
+                <div class="class-card">🚗 Car</div>
+                <div class="class-card">🚌 Bus</div>
+                <div class="class-card">🚚 Truck</div>
+                <div class="class-card">⚽ Boll</div>
+                <div class="class-card">🚴 Bike</div>
+                <div class="class-card">🐕 Dogs</div>
+                <div class="class-card">🐱 Cats</div>
 
             </div>
 
@@ -289,7 +296,11 @@
 
         <div class="footer-inner">
 
-            <span>Built by Sudhanshu Narayane</span>
+            <span>Built by
+                <a href="https://github.com/Sido-dev" target="_blank" style="color:inherit;text-decoration:underline;">Sudhanshu Narayane</a>
+                &amp;
+                <a href="https://github.com/PrashantPKP" target="_blank" style="color:inherit;text-decoration:underline;">Prashant Parshuramkar</a>
+            </span>
 
             <span class="footer-status"><i class="dot"></i>Deployed &amp; running</span>
 

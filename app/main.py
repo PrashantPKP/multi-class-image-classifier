@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from app.predict import predict_image
+from app.predict import predict_image, reload_model, get_model_path, CLASS_NAMES
 from datetime import datetime
 import shutil
 import requests
@@ -187,6 +187,24 @@ async def health():
 
     return {
         "status": "ok",
-        "service": "Intel Image Classification API",
+        "service": "Multi-Class Image Classifier API",
         "timestamp": datetime.utcnow().isoformat()
+    }
+
+
+@app.post("/admin/reload-model")
+async def admin_reload_model():
+    try:
+        selected = reload_model()
+        return {"status": "reloaded", "model_path": str(selected)}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+
+@app.get("/admin/model-info")
+async def admin_model_info():
+    path = get_model_path()
+    return {
+        "model_path": str(path) if path is not None else None,
+        "classes": CLASS_NAMES,
     }

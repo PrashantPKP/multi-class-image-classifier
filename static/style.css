@@ -1,6 +1,6 @@
 /* =========================================================
-   INTEL VISION AI
-   Design direction: field-survey blueprint. The product reads
+    MULTI-CLASS IMAGE CLASSIFIER
+    Design direction: field-survey blueprint. The product reads
    terrain photographs and files them by type, so the interface
    borrows the vocabulary of surveying and cartography: ruled
    grids, drafting marks, specimen tags, graduated readouts.
@@ -31,6 +31,15 @@
     --t-mountain:#9aa7b5;
     --t-sea:#3fb0c2;
     --t-street:#c7ccd3;
+
+    /* ---- New object classes ---- */
+    --t-car:#e74c3c;
+    --t-bus:#3498db;
+    --t-truck:#f39c12;
+    --t-boll:#e91e63;
+    --t-bike:#2ecc71;
+    --t-dogs:#d35400;
+    --t-cats:#1abc9c;
 
     /* ---- Type ---- */
     --font-display:'Space Grotesk', sans-serif;
@@ -561,6 +570,13 @@ button:disabled{
 .specimen-card[data-class="mountain"]{ --accent:var(--t-mountain); }
 .specimen-card[data-class="sea"]{ --accent:var(--t-sea); }
 .specimen-card[data-class="street"]{ --accent:var(--t-street); }
+.specimen-card[data-class="car"]{ --accent:var(--t-car); }
+.specimen-card[data-class="bus"]{ --accent:var(--t-bus); }
+.specimen-card[data-class="truck"]{ --accent:var(--t-truck); }
+.specimen-card[data-class="boll"]{ --accent:var(--t-boll); }
+.specimen-card[data-class="bike"]{ --accent:var(--t-bike); }
+.specimen-card[data-class="dogs"]{ --accent:var(--t-dogs); }
+.specimen-card[data-class="cats"]{ --accent:var(--t-cats); }
 
 .specimen-tab{
     width:8px;
